@@ -38,6 +38,7 @@ class _SettingState extends State<SettingPage> {
           ),
           Center(
             child: GestureView(
+              forceConsecutiveDots: true,
               immediatelyClear: true,
               size: 300,
               ringRadius: 20,

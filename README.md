@@ -4,8 +4,8 @@
 [![support](https://img.shields.io/badge/platform-flutter%7Cdart%20vm-ff69b4.svg?style=flat-square)](https://pub.dartlang.org/packages/gesture_recognition_v2)
 
 
-> a gesture recognition verification lock
-> form [gesture_recognition](https://pub.dev/packages/gesture_recognition)
+    > A gesture recognition verification lock
+    > [gesture_recognition](https://pub.dev/packages/gesture_recognition) Enhanced Edition
 
 
 ### [中文](https://github.com/yiersanto/gesture_recognition_v2/blob/master/README_ZH.md) [English](https://github.com/yiersanto/gesture_recognition_v2/blob/master/README.md)
@@ -72,3 +72,4 @@ GestureView(
 | onPanUp | Function(List<int>) | After the finger is raised |  | false |
 | onPanDown | Function() | After pressing your finger | | false |
 | immediatelyClear | bool | Clear the trace after lifting the hand | false| false|
+| forceConsecutiveDots | bool | Forced continuous connection | false| false|

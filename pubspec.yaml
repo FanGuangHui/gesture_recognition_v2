@@ -1,6 +1,6 @@
 name: gesture_recognition_v2
 description: A gesture recognition verification lock. A total of nine points, slide to connect different points and return an array of numbers.
-version: 0.0.5
+version: 0.0.6
 homepage: https://github.com/yiersanto/gesture_recognition_v2
 
 environment:

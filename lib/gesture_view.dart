@@ -13,23 +13,25 @@ class GestureView extends StatefulWidget {
   final double lineWidth;
   final bool showUnSelectRing;
   final bool immediatelyClear;
+  final bool forceConsecutiveDots;
   final Function()? onPanDown;
   final Function(List<int>)? onPanUp;
 
-  const GestureView(
-      {Key? key,
-      required this.size,
-      this.selectColor = Colors.blue,
-      this.unSelectColor = Colors.grey,
-      this.ringWidth = 4,
-      this.ringRadius = 30,
-      this.showUnSelectRing = true,
-      this.circleRadius = 20,
-      this.lineWidth = 6,
-      this.onPanUp,
-      this.onPanDown,
-      this.immediatelyClear = false})
-      : assert(ringRadius >= circleRadius),
+  const GestureView({
+    Key? key,
+    required this.size,
+    this.selectColor = Colors.blue,
+    this.unSelectColor = Colors.grey,
+    this.ringWidth = 4,
+    this.ringRadius = 30,
+    this.showUnSelectRing = true,
+    this.circleRadius = 20,
+    this.lineWidth = 6,
+    this.onPanUp,
+    this.onPanDown,
+    this.immediatelyClear = false,
+    this.forceConsecutiveDots = false,
+  })  : assert(ringRadius >= circleRadius),
         super(key: key);
 
   @override
@@ -51,8 +53,7 @@ class GestureState extends State<GestureView> {
     for (int i = 0; i < 9; i++) {
       double x = gapWidth + realRingSize;
       double y = gapWidth + realRingSize;
-      points.add(
-          Point(x: (1 + i % 3 * 2) * x, y: (1 + i ~/ 3 * 2) * y, position: i));
+      points.add(Point(x: (1 + i % 3 * 2) * x, y: (1 + i ~/ 3 * 2) * y, position: i));
     }
   }
 
@@ -129,26 +130,47 @@ class GestureState extends State<GestureView> {
   }
 
   _slideDealt(Offset offSet) {
+    final onPosition = _getPointPosition(offSet.dx, offSet.dy);
+    if (onPosition == -1) return;
+    final onPoint = points[onPosition];
+
+    if (pathPoints.isNotEmpty && widget.forceConsecutiveDots) {
+      final prevPoint = pathPoints.last;
+      final offSetDx = ((prevPoint.x + onPoint.x) / 2).abs();
+      final offSetDy = ((prevPoint.y + onPoint.y) / 2).abs();
+      final midPosition = _getPointPosition(offSetDx, offSetDy);
+      if (midPosition != -1) {
+        final midPoint = points[midPosition];
+        if (!midPoint.isSelect) {
+          midPoint.isSelect = true;
+          pathPoints.add(midPoint);
+        }
+      }
+    }
+
+    if (!onPoint.isSelect) {
+      onPoint.isSelect = true;
+      pathPoints.add(onPoint);
+    }
+  }
+
+  int _getPointPosition(double dx, double dy) {
     int xPosition = -1;
     int yPosition = -1;
     for (int i = 0; i < 3; i++) {
-      if (xPosition == -1 &&
-          points[i].x + realRadius >= offSet.dx &&
-          offSet.dx >= points[i].x - realRadius) {
+      if (xPosition == -1 && points[i].x + realRadius >= dx && dx >= points[i].x - realRadius) {
         xPosition = i;
       }
       if (yPosition == -1 &&
-          points[i * 3].y + realRadius >= offSet.dy &&
-          offSet.dy >= points[i * 3].y - realRadius) {
+          points[i * 3].y + realRadius >= dy &&
+          dy >= points[i * 3].y - realRadius) {
         yPosition = i;
       }
     }
-    if (xPosition == -1 || yPosition == -1) return;
-    int position = yPosition * 3 + xPosition;
-    if (!points[position].isSelect) {
-      points[position].isSelect = true;
-      pathPoints.add(points[position]);
+    if (xPosition == -1 || yPosition == -1) {
+      return -1;
     }
+    return yPosition * 3 + xPosition;
   }
 
   _clearAllData() {

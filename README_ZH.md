@@ -3,8 +3,8 @@
 [![Pub](https://img.shields.io/pub/v/gesture_recognition_v2.svg?style=flat-square)](https://pub.dartlang.org/packages/gesture_recognition_v2)
 [![support](https://img.shields.io/badge/platform-flutter%7Cdart%20vm-ff69b4.svg?style=flat-square)](https://pub.dartlang.org/packages/gesture_recognition_v2)
 
-> 一个Flutter编写的手势识别验证锁。
-> 来自 [gesture_recognition](https://pub.dev/packages/gesture_recognition)
+    > 一个Flutter编写的手势识别验证锁。
+    > [gesture_recognition](https://pub.dev/packages/gesture_recognition) 增强版
 
 ### [中文](https://github.com/yiersanto/gesture_recognition_v2/blob/master/README_ZH.md) [English](https://github.com/yiersanto/gesture_recognition_v2/blob/master/README.md)
 
@@ -70,3 +70,4 @@ GestureView(
 | onPanUp | Function(List<int>) | 手指抬起后回馈 |  | false |
 | onPanDown | Function() | 手指按下时回馈 | | false |
 | immediatelyClear | bool | 手指抬起后是否清理痕迹 | false| false|
+| forceConsecutiveDots | bool | 强制连续连接 | false| false|
