@@ -42,7 +42,12 @@ class PointView extends CustomPainter {
       canvas.drawCircle(offSet, circleRadius, circlePaint);
       if (showUnSelectRing || point.isSelect) {
         canvas.drawArc(
-            Rect.fromCircle(center: offSet, radius: ringRadius), 0, 360, false, ringPaint);
+          Rect.fromCircle(center: offSet, radius: ringRadius),
+          0,
+          360,
+          false,
+          ringPaint,
+        );
       }
     }
   }

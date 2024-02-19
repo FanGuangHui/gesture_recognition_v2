@@ -45,7 +45,10 @@ class LineView extends CustomPainter {
     }
 
     canvas.drawLine(
-        Offset(pathPoints[length - 1].x, pathPoints[length - 1].y), Offset(endX, endY), linePaint);
+      Offset(pathPoints[length - 1].x, pathPoints[length - 1].y),
+      Offset(endX, endY),
+      linePaint,
+    );
   }
 
   @override
